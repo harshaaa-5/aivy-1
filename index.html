@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learnova Modern - Next-Gen AI Learning Platform</title>
+
+    <!-- Modern CSS Framework Integration -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Progressive Web App -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+
+    <!-- Modern Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="https://unpkg.com/three@0.157.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Modern Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Web Components & Modern APIs -->
+    <script type="module">
+        import { LitElement, html, css } from 'https://cdn.skypack.dev/lit';
+    </script>
+</head>
+<body>
+    <!-- Authentication Overlay with Modern Glass Design -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-background">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+
+        <div class="auth-container">
+            <div class="auth-card glassmorphism">
+                <!-- Animated Logo -->
+                <div class="auth-header">
+                    <div class="logo-container">
+                        <lottie-player 
+                            src="https://assets1.lottiefiles.com/packages/lf20_V9t630.json" 
+                            background="transparent" 
+                            speed="1" 
+                            style="width: 80px; height: 80px;" 
+                            loop 
+                            autoplay>
+                        </lottie-player>
+                        <div class="logo-text">
+                            <span class="logo-primary">Learnova</span>
+                            <span class="logo-subtitle">Next-Gen AI Learning</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modern Tab System -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Sign In</button>
+                    <button class="auth-tab" data-tab="register">Sign Up</button>
+                    <div class="tab-indicator"></div>
+                </div>
+
+                <!-- Login Form with Modern Elements -->
+                <form id="loginForm" class="auth-form active">
+                    <div class="form-floating">
+                        <input type="email" id="loginEmail" name="email" required>
+                        <label for="loginEmail">Email Address</label>
+                        <div class="form-validation"></div>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="password" id="loginPassword" name="password" required>
+                        <label for="loginPassword">Password</label>
+                        <div class="password-toggle">
+                            <i data-lucide="eye"></i>
+                        </div>
+                        <div class="form-validation"></div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-modern">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="auth-btn primary">
+                        <span class="btn-text">Sign In</span>
+                        <div class="btn-loader hidden">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+
+                    <div class="social-divider">
+                        <span>or continue with</span>
+                    </div>
+
+                    <div class="social-buttons">
+                        <button type="button" class="social-btn google" onclick="signInWithGoogle()">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Google
+                        </button>
+                        <button type="button" class="social-btn github" onclick="signInWithGitHub()">
+                            <i data-lucide="github"></i>
+                            GitHub
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="auth-form">
+                    <div class="form-floating">
+                        <input type="text" id="registerName" name="name" required>
+                        <label for="registerName">Full Name</label>
+                        <div class="form-validation"></div>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="email" id="registerEmail" name="email" required>
+                        <label for="registerEmail">Email Address</label>
+                        <div class="form-validation"></div>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="password" id="registerPassword" name="password" required>
+                        <label for="registerPassword">Password</label>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text">Password strength</span>
+                        </div>
+                        <div class="form-validation"></div>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="form-validation"></div>
+                    </div>
+
+                    <label class="checkbox-modern">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span class="checkmark"></span>
+                        I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
+                    </label>
+
+                    <button type="submit" class="auth-btn primary">
+                        <span class="btn-text">Create Account</span>
+                        <div class="btn-loader hidden">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Status with Modern Design -->
+    <div id="connectionStatus" class="connection-status">
+        <div class="status-indicator">
+            <div class="status-pulse"></div>
+            <span class="status-text">Connected</span>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="main-app hidden">
+        <!-- Modern Navigation Header with Glass Effect -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <!-- Animated Logo -->
+                    <div class="logo-modern">
+                        <div class="logo-icon">
+                            <lottie-player 
+                                src="https://assets9.lottiefiles.com/packages/lf20_qp1q7mct.json" 
+                                background="transparent" 
+                                speed="1" 
+                                style="width: 40px; height: 40px;" 
+                                loop 
+                                autoplay>
+                            </lottie-player>
+                        </div>
+                        <div class="logo-text-modern">
+                            <span class="logo-primary">Learnova</span>
+                            <span class="logo-subtitle">AI Learning Platform</span>
+                        </div>
+                    </div>
+
+                    <!-- Modern Navigation -->
+                    <nav class="nav-modern">
+                        <div class="nav-pills">
+                            <button class="nav-pill active" data-section="dashboard">
+                                <i data-lucide="home"></i>
+                                <span>Dashboard</span>
+                            </button>
+                            <button class="nav-pill" data-section="learning-hub">
+                                <i data-lucide="brain"></i>
+                                <span>AI Learning</span>
+                            </button>
+                            <button class="nav-pill" data-section="analytics-center">
+                                <i data-lucide="trending-up"></i>
+                                <span>Analytics</span>
+                            </button>
+                            <button class="nav-pill" data-section="community-space">
+                                <i data-lucide="users"></i>
+                                <span>Community</span>
+                            </button>
+                            <button class="nav-pill" data-section="ai-assistant">
+                                <i data-lucide="bot"></i>
+                                <span>AI Assistant</span>
+                            </button>
+                            <button class="nav-pill" data-section="profile-settings">
+                                <i data-lucide="settings"></i>
+                                <span>Profile</span>
+                            </button>
+                        </div>
+                    </nav>
+
+                    <!-- Modern Header Actions -->
+                    <div class="header-actions">
+                        <!-- Theme Toggle -->
+                        <button class="action-btn theme-toggle" id="themeToggle">
+                            <i data-lucide="sun" class="light-icon"></i>
+                            <i data-lucide="moon" class="dark-icon hidden"></i>
+                        </button>
+
+                        <!-- Command Palette -->
+                        <button class="action-btn command-btn" id="commandBtn">
+                            <i data-lucide="command"></i>
+                        </button>
+
+                        <!-- Notifications with Badge -->
+                        <button class="action-btn notification-btn" id="notificationBtn">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge">3</span>
+                            <div class="notification-pulse"></div>
+                        </button>
+
+                        <!-- User Avatar with Status -->
+                        <div class="user-avatar-modern" onclick="toggleUserMenu()">
+                            <img id="userAvatar" src="" alt="User Avatar" class="avatar-img">
+                            <div class="user-initials" id="userInitials">AJ</div>
+                            <div class="status-indicator online"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Command Palette Modal -->
+        <div id="commandPalette" class="command-palette hidden">
+            <div class="command-container">
+                <div class="command-search">
+                    <i data-lucide="search"></i>
+                    <input type="text" placeholder="Type a command or search..." id="commandInput">
+                    <kbd class="shortcut">Esc</kbd>
+                </div>
+                <div class="command-results" id="commandResults">
+                    <!-- Dynamic command results -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content with Modern Layout -->
+        <main class="main">
+            <div class="container">
+                <!-- Dashboard Section with 3D Elements -->
+                <section id="dashboard" class="section active">
+                    <!-- Hero Section with 3D Background -->
+                    <div class="hero-section">
+                        <div class="hero-background">
+                            <canvas id="heroCanvas"></canvas>
+                        </div>
+                        <div class="hero-content">
+                            <div class="hero-text">
+                                <h1 class="hero-title">
+                                    Welcome back, <span class="highlight" id="dashboardName">Alex</span>! 
+                                    <span class="wave">👋</span>
+                                </h1>
+                                <p class="hero-subtitle">Ready to supercharge your learning with AI?</p>
+                            </div>
+                            <div class="hero-stats">
+                                <div class="hero-stat">
+                                    <div class="stat-value" id="heroStreak">15</div>
+                                    <div class="stat-label">Day Streak</div>
+                                </div>
+                                <div class="hero-stat">
+                                    <div class="stat-value" id="heroAccuracy">78%</div>
+                                    <div class="stat-label">Accuracy</div>
+                                </div>
+                                <div class="hero-stat">
+                                    <div class="stat-value" id="heroTime">125h</div>
+                                    <div class="stat-label">Study Time</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modern Stats Grid with Animations -->
+                    <div class="stats-grid-modern">
+                        <div class="stat-card-modern primary" data-animate="fadeInUp">
+                            <div class="stat-icon">
+                                <div class="icon-bg">
+                                    <i data-lucide="book-open"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="activeSubjects">3</div>
+                                <div class="stat-label">Active Subjects</div>
+                                <div class="stat-change positive">+2 this week</div>
+                            </div>
+                            <div class="stat-chart">
+                                <canvas class="mini-chart" data-chart="subjects"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-modern success" data-animate="fadeInUp" data-delay="100">
+                            <div class="stat-icon">
+                                <div class="icon-bg">
+                                    <i data-lucide="target"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="avgAccuracy">78%</div>
+                                <div class="stat-label">Average Accuracy</div>
+                                <div class="stat-change positive">+6% improvement</div>
+                            </div>
+                            <div class="stat-chart">
+                                <canvas class="mini-chart" data-chart="accuracy"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-modern warning" data-animate="fadeInUp" data-delay="200">
+                            <div class="stat-icon">
+                                <div class="icon-bg">
+                                    <i data-lucide="clock"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="totalStudyTime">125h</div>
+                                <div class="stat-label">Total Study Time</div>
+                                <div class="stat-change positive">+12h this week</div>
+                            </div>
+                            <div class="stat-chart">
+                                <canvas class="mini-chart" data-chart="time"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="stat-card-modern info" data-animate="fadeInUp" data-delay="300">
+                            <div class="stat-icon">
+                                <div class="icon-bg">
+                                    <i data-lucide="flame"></i>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="currentStreak">15</div>
+                                <div class="stat-label">Learning Streak</div>
+                                <div class="stat-change positive">🔥 On fire!</div>
+                            </div>
+                            <div class="stat-chart">
+                                <canvas class="mini-chart" data-chart="streak"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Insights Dashboard -->
+                    <div class="dashboard-grid">
+                        <!-- AI Recommendations -->
+                        <div class="dashboard-card ai-recommendations" data-animate="fadeInLeft">
+                            <div class="card-header">
+                                <h3>🧠 AI Recommendations</h3>
+                                <div class="card-actions">
+                                    <button class="btn-icon" onclick="refreshRecommendations()">
+                                        <i data-lucide="refresh-cw"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="recommendations-list" id="aiRecommendations">
+                                <!-- Dynamic AI recommendations -->
+                            </div>
+                        </div>
+
+                        <!-- Performance Chart -->
+                        <div class="dashboard-card performance-chart" data-animate="fadeInUp">
+                            <div class="card-header">
+                                <h3>📈 Performance Trends</h3>
+                                <div class="chart-controls">
+                                    <select class="chart-period">
+                                        <option value="week">This Week</option>
+                                        <option value="month">This Month</option>
+                                        <option value="year">This Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="performanceTrendChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="dashboard-card quick-actions" data-animate="fadeInRight">
+                            <div class="card-header">
+                                <h3>⚡ Quick Actions</h3>
+                            </div>
+                            <div class="action-grid">
+                                <button class="action-card urgent" onclick="startAIPractice()">
+                                    <div class="action-icon">🎯</div>
+                                    <div class="action-text">
+                                        <h4>AI Practice</h4>
+                                        <p>Personalized questions</p>
+                                    </div>
+                                </button>
+                                <button class="action-card success" onclick="joinLiveSession()">
+                                    <div class="action-icon">👥</div>
+                                    <div class="action-text">
+                                        <h4>Live Session</h4>
+                                        <p>Join study group</p>
+                                    </div>
+                                </button>
+                                <button class="action-card info" onclick="openAIChat()">
+                                    <div class="action-icon">🤖</div>
+                                    <div class="action-text">
+                                        <h4>AI Tutor</h4>
+                                        <p>Ask questions</p>
+                                    </div>
+                                </button>
+                                <button class="action-card warning" onclick="createContent()">
+                                    <div class="action-icon">✍️</div>
+                                    <div class="action-text">
+                                        <h4>Create</h4>
+                                        <p>New content</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Feed -->
+                    <div class="activity-section" data-animate="fadeInUp">
+                        <div class="section-header">
+                            <h3>🔔 Recent Activity</h3>
+                            <button class="btn-secondary" onclick="viewAllActivity()">View All</button>
+                        </div>
+                        <div class="activity-feed" id="activityFeed">
+                            <!-- Dynamic activity items -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI Learning Hub -->
+                <section id="learning-hub" class="section">
+                    <div class="page-hero">
+                        <div class="hero-content">
+                            <h1>🧠 AI-Powered Learning Hub</h1>
+                            <p>Experience personalized learning with cutting-edge AI technology</p>
+                        </div>
+                    </div>
+
+                    <!-- Modern Tabs -->
+                    <div class="tabs-modern">
+                        <div class="tab-list">
+                            <button class="tab active" data-tab="ai-practice">
+                                <i data-lucide="brain"></i>
+                                AI Practice
+                            </button>
+                            <button class="tab" data-tab="subjects">
+                                <i data-lucide="book"></i>
+                                My Subjects
+                            </button>
+                            <button class="tab" data-tab="content-studio">
+                                <i data-lucide="edit"></i>
+                                Content Studio
+                            </button>
+                            <button class="tab" data-tab="live-collaboration">
+                                <i data-lucide="users"></i>
+                                Live Collaboration
+                            </button>
+                        </div>
+                        <div class="tab-indicator"></div>
+                    </div>
+
+                    <!-- Tab Panels -->
+                    <div class="tab-content">
+                        <!-- AI Practice Panel -->
+                        <div id="ai-practice" class="tab-panel active">
+                            <div class="ai-practice-hub">
+                                <div class="practice-header">
+                                    <h2>🎯 Personalized AI Practice</h2>
+                                    <div class="practice-stats">
+                                        <div class="practice-stat">
+                                            <span class="stat-value">87%</span>
+                                            <span class="stat-label">Success Rate</span>
+                                        </div>
+                                        <div class="practice-stat">
+                                            <span class="stat-value">42</span>
+                                            <span class="stat-label">Questions Today</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AI Practice Options -->
+                                <div class="practice-options">
+                                    <div class="practice-card adaptive">
+                                        <div class="card-icon">🧠</div>
+                                        <h3>Adaptive Learning</h3>
+                                        <p>AI adjusts difficulty based on your performance</p>
+                                        <button class="btn-primary" onclick="startAdaptivePractice()">
+                                            Start Learning
+                                        </button>
+                                    </div>
+                                    <div class="practice-card targeted">
+                                        <div class="card-icon">🎯</div>
+                                        <h3>Weak Area Focus</h3>
+                                        <p>Target your challenging topics</p>
+                                        <button class="btn-primary" onclick="focusWeakAreas()">
+                                            Focus Practice
+                                        </button>
+                                    </div>
+                                    <div class="practice-card challenge">
+                                        <div class="card-icon">🏆</div>
+                                        <h3>Daily Challenge</h3>
+                                        <p>Complete today's AI-generated challenge</p>
+                                        <button class="btn-primary" onclick="dailyChallenge()">
+                                            Take Challenge
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- AI Question Interface -->
+                                <div class="ai-question-interface" id="questionInterface">
+                                    <!-- Dynamic question interface -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subjects Panel -->
+                        <div id="subjects" class="tab-panel">
+                            <div class="subjects-hub">
+                                <div class="subjects-header">
+                                    <h2>📚 Learning Subjects</h2>
+                                    <button class="btn-primary" onclick="addSubject()">
+                                        <i data-lucide="plus"></i>
+                                        Add Subject
+                                    </button>
+                                </div>
+                                <div class="subjects-grid" id="subjectsGrid">
+                                    <!-- Dynamic subject cards -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Collaboration Panel -->
+                        <div id="live-collaboration" class="tab-panel">
+                            <div class="collaboration-hub">
+                                <div class="collab-header">
+                                    <h2>👥 Live Collaboration</h2>
+                                    <div class="online-users">
+                                        <span class="online-count">127 learners online</span>
+                                    </div>
+                                </div>
+
+                                <!-- Live Sessions -->
+                                <div class="live-sessions">
+                                    <h3>🔴 Active Sessions</h3>
+                                    <div class="sessions-grid" id="liveSessionsGrid">
+                                        <!-- Dynamic live sessions -->
+                                    </div>
+                                </div>
+
+                                <!-- Study Rooms -->
+                                <div class="study-rooms">
+                                    <h3>🏠 Study Rooms</h3>
+                                    <div class="rooms-grid" id="studyRoomsGrid">
+                                        <!-- Dynamic study rooms -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modern AI Assistant -->
+                <section id="ai-assistant" class="section">
+                    <div class="ai-assistant-modern">
+                        <div class="ai-header">
+                            <div class="ai-avatar-large">
+                                <lottie-player 
+                                    src="https://assets4.lottiefiles.com/packages/lf20_M9p23l.json" 
+                                    background="transparent" 
+                                    speed="1" 
+                                    style="width: 60px; height: 60px;" 
+                                    loop 
+                                    autoplay>
+                                </lottie-player>
+                            </div>
+                            <div class="ai-info">
+                                <h1>🤖 AI Learning Assistant</h1>
+                                <p>Your personal AI tutor powered by advanced language models</p>
+                                <div class="ai-capabilities">
+                                    <span class="capability">Question Generation</span>
+                                    <span class="capability">Performance Analysis</span>
+                                    <span class="capability">Study Planning</span>
+                                    <span class="capability">Content Creation</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-interface">
+                            <!-- Chat Interface -->
+                            <div class="ai-chat-modern">
+                                <div class="chat-header">
+                                    <div class="chat-status">
+                                        <div class="status-dot online"></div>
+                                        <span>AI Assistant - Online</span>
+                                    </div>
+                                    <div class="chat-actions">
+                                        <button class="btn-icon" onclick="exportChatHistory()">
+                                            <i data-lucide="download"></i>
+                                        </button>
+                                        <button class="btn-icon" onclick="clearChatHistory()">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="chat-messages" id="aiChatMessages">
+                                    <!-- Welcome message -->
+                                    <div class="message ai-message">
+                                        <div class="message-avatar">
+                                            <lottie-player 
+                                                src="https://assets1.lottiefiles.com/packages/lf20_V9t630.json" 
+                                                background="transparent" 
+                                                speed="1" 
+                                                style="width: 32px; height: 32px;" 
+                                                loop 
+                                                autoplay>
+                                            </lottie-player>
+                                        </div>
+                                        <div class="message-content">
+                                            <div class="message-text">
+                                                Hello! I'm your AI learning assistant. I can help you with:
+                                                <ul>
+                                                    <li>📚 Generate personalized practice questions</li>
+                                                    <li>📊 Analyze your learning patterns</li>
+                                                    <li>🎯 Create custom study plans</li>
+                                                    <li>💡 Explain complex concepts</li>
+                                                    <li>🏆 Set and track learning goals</li>
+                                                </ul>
+                                                What would you like to work on today?
+                                            </div>
+                                            <div class="message-actions">
+                                                <button class="msg-action" onclick="likeMessage(this)">
+                                                    <i data-lucide="thumbs-up"></i>
+                                                </button>
+                                                <button class="msg-action" onclick="copyMessage(this)">
+                                                    <i data-lucide="copy"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="chat-input-modern">
+                                    <div class="input-container">
+                                        <button class="input-action" onclick="attachFile()">
+                                            <i data-lucide="paperclip"></i>
+                                        </button>
+                                        <textarea 
+                                            id="aiChatInput" 
+                                            placeholder="Ask me anything about your learning..."
+                                            rows="1"
+                                        ></textarea>
+                                        <div class="input-actions">
+                                            <button class="input-action voice-btn" onclick="startVoiceInput()">
+                                                <i data-lucide="mic"></i>
+                                            </button>
+                                            <button class="send-btn" onclick="sendAIMessage()">
+                                                <i data-lucide="send"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Quick Prompts -->
+                                    <div class="quick-prompts">
+                                        <button class="quick-prompt" onclick="quickPrompt('explain')">
+                                            Explain a concept
+                                        </button>
+                                        <button class="quick-prompt" onclick="quickPrompt('generate')">
+                                            Generate questions
+                                        </button>
+                                        <button class="quick-prompt" onclick="quickPrompt('analyze')">
+                                            Analyze performance
+                                        </button>
+                                        <button class="quick-prompt" onclick="quickPrompt('plan')">
+                                            Create study plan
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI Tools Sidebar -->
+                            <div class="ai-tools-modern">
+                                <h3>🛠️ AI Tools</h3>
+                                <div class="tools-grid">
+                                    <div class="tool-card" onclick="openTool('question-generator')">
+                                        <div class="tool-icon">❓</div>
+                                        <h4>Question Generator</h4>
+                                        <p>AI creates questions from your content</p>
+                                    </div>
+                                    <div class="tool-card" onclick="openTool('concept-explainer')">
+                                        <div class="tool-icon">💡</div>
+                                        <h4>Concept Explainer</h4>
+                                        <p>Break down complex topics</p>
+                                    </div>
+                                    <div class="tool-card" onclick="openTool('study-planner')">
+                                        <div class="tool-icon">📅</div>
+                                        <h4>Study Planner</h4>
+                                        <p>Personalized study schedules</p>
+                                    </div>
+                                    <div class="tool-card" onclick="openTool('performance-analyzer')">
+                                        <div class="tool-icon">📊</div>
+                                        <h4>Performance Analyzer</h4>
+                                        <p>Deep learning insights</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Other sections remain similar but with modern styling -->
+                <!-- Analytics, Community, Profile sections would follow similar modern patterns -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modern Toast Notifications -->
+    <div id="toastContainer" class="toast-container">
+        <!-- Dynamic toast notifications -->
+    </div>
+
+    <!-- Loading States -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <lottie-player 
+                src="https://assets2.lottiefiles.com/packages/lf20_szlepvdj.json" 
+                background="transparent" 
+                speed="1" 
+                style="width: 100px; height: 100px;" 
+                loop 
+                autoplay>
+            </lottie-player>
+            <h3>Loading your learning experience...</h3>
+            <p id="loadingText">Connecting to AI services</p>
+        </div>
+    </div>
+
+    <!-- PWA Install Prompt -->
+    <div id="pwaInstallPrompt" class="pwa-prompt hidden">
+        <div class="pwa-content">
+            <div class="pwa-icon">📱</div>
+            <div class="pwa-text">
+                <h4>Install Learnova</h4>
+                <p>Get the full app experience</p>
+            </div>
+            <div class="pwa-actions">
+                <button class="btn-secondary" onclick="dismissPWAPrompt()">Not now</button>
+                <button class="btn-primary" onclick="installPWA()">Install</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="client-modern.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
